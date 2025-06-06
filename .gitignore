@@ -1,0 +1,37 @@
+# Ignoruj pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Ignoruj katalogi CLion/JetBrains
+.idea/
+*.iml
+
+# Ignoruj katalogi build / cmake
+cmake-build-*/
+build/
+out/
+
+# CMake cache i pliki tymczasowe
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Pliki binarne i wykonywalne
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+
+# Testowe lub tymczasowe
+*.log
+*.tmp
+
+# Pliki zrzutów lub debug
+core
+vgcore.*
+*.dSYM/
