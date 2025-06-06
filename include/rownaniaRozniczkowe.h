@@ -1,0 +1,8 @@
+//
+// Created by Admin on 06.06.2025.
+//
+
+#ifndef ROWNANIAROZNICZKOWE_H
+#define ROWNANIAROZNICZKOWE_H
+
+#endif //ROWNANIAROZNICZKOWE_H

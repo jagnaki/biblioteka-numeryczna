@@ -1,0 +1,8 @@
+//
+// Created by Admin on 06.06.2025.
+//
+
+#ifndef CALKOWANIENUMERYCZNE_H
+#define CALKOWANIENUMERYCZNE_H
+
+#endif //CALKOWANIENUMERYCZNE_H
