@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include "../include/interpolacja.h"
 using namespace std;
 
 //funkcja liczaca wartosc wielomianu interpolacyjnego
@@ -21,11 +22,6 @@ double interpolacja_lagrangea(vector<double> x, vector<double> y, double n) {
         result += fxi;
     }
     return result;
-}
-
-//funkcja f(x)=1/(1+x^2)
-double f(double x) {
-    return 1/(1+x*x);
 }
 
 //generowanie rownomiernie rozlozonych punktow

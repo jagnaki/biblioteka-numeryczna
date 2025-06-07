@@ -1,8 +1,7 @@
-//
-// Created by Admin on 06.06.2025.
-//
+#pragma once
+#include <vector>
+using namespace std;
 
-#ifndef INTERPOLACJA_H
-#define INTERPOLACJA_H
-
-#endif //INTERPOLACJA_H
+double interpolacja_lagrangea(vector<double> x, vector<double> y, double n);
+vector<double> generowanie_punktow(double a, double b, int n);
+void interpolacja_newtona();

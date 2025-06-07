@@ -1,8 +1,2 @@
-//
-// Created by Admin on 06.06.2025.
-//
+# pragma once
 
-#ifndef ROWNANIANIELINIOWE_H
-#define ROWNANIANIELINIOWE_H
-
-#endif //ROWNANIANIELINIOWE_H

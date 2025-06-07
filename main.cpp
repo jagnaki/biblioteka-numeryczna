@@ -1,76 +1,16 @@
 #include <iostream>
-#include "include/aproksymacja.h"
-#include "include/ukladyRownanLiniowych.h"
-#include "include/calkowanieNumeryczne.h"
-#include "include/rownaniaRozniczkowe.h"
-#include "include/interpolacja.h"
-#include "include/rownaniaNieliniowe.h"
+#include <vector>
+
+#include "../biblioteka-numeryczna/include/aproksymacja.h"
+#include "../biblioteka-numeryczna/include/ukladyRownanLiniowych.h"
+#include "../biblioteka-numeryczna/include/calkowanieNumeryczne.h"
+#include "../biblioteka-numeryczna/include/rownaniaRozniczkowe.h"
+#include "../biblioteka-numeryczna/include/interpolacja.h"
+#include "../biblioteka-numeryczna/include/rownaniaNieliniowe.h"
+#include "../biblioteka-numeryczna/include/funkcje.h"
 
 using namespace std;
 
-// // --- Interpolacja ---
-// void interpolacja_newtona() {
-//     cout << "Wybrano: Interpolacja Newtona\n";
-//     // Implementacja tutaj
-// }
-//
-// void interpolacja_lagrangea() {
-//     cout << "Wybrano: Interpolacja Lagrange'a\n";
-//     // Implementacja tutaj
-// }
-//
-// // --- Uklady rownan liniowych ---
-// void metoda_lu() {
-//     cout << "Wybrano: Rozwiazywanie ukladu rownan liniowych - metoda LU\n";
-//     // Implementacja tutaj
-// }
-//
-// void metoda_gaussa() {
-//     cout << "Wybrano: Rozwiazywanie ukladu rownan liniowych - metoda Gaussa\n";
-//     // Implementacja tutaj
-// }
-//
-// // --- Calkowanie numeryczne ---
-// void metoda_prostokatow() {
-//     cout << "Wybrano: Calkowanie - metoda prostokatow\n";
-//     // Implementacja tutaj
-// }
-//
-// void metoda_trapezow() {
-//     cout << "Wybrano: Calkowanie - metoda trapezow\n";
-//     // Implementacja tutaj
-// }
-//
-// void metoda_simpsona() {
-//     cout << "Wybrano: Calkowanie - metoda Simpsona\n";
-//     // Implementacja tutaj
-// }
-//
-// void kwadratura_gaussa_legendre(int wezly) {
-//     cout << "Wybrano: Kwadratura Gaussa-Legendre'a (" << wezly << " wezly)\n";
-//     // Implementacja tutaj
-// }
-//
-// // --- Rownania rozniczkowe ---
-// void metoda_eulera() {
-//     cout << "Wybrano: Rownania rozniczkowe - metoda Eulera\n";
-//     // Implementacja tutaj
-// }
-//
-// void metoda_heuna() {
-//     cout << "Wybrano: Rownania rozniczkowe - metoda Heuna\n";
-//     // Implementacja tutaj
-// }
-//
-// void metoda_punktu_srodkowego() {
-//     cout << "Wybrano: Rownania rozniczkowe - metoda punktu srodkowego\n";
-//     // Implementacja tutaj
-// }
-//
-// void metoda_rungego_kutty_4() {
-//     cout << "Wybrano: Rownania rozniczkowe - metoda Rungego-Kutty IV rzedu\n";
-//     // Implementacja tutaj
-// }
 
 int main() {
     int wybor;
@@ -96,20 +36,60 @@ int main() {
         cin >> wybor;
 
         switch (wybor) {
-            case 1: interpolacja_newtona(); break;
-            case 2: interpolacja_lagrangea(); break;
-            case 3: metoda_lu(); break;
-            case 4: metoda_gaussa(); break;
-            case 5: metoda_prostokatow(); break;
-            case 6: metoda_trapezow(); break;
-            case 7: metoda_simpsona(); break;
-            case 8: kwadratura_gaussa_legendre(2); break;
-            case 9: kwadratura_gaussa_legendre(3); break;
-            case 10: kwadratura_gaussa_legendre(4); break;
-            case 11: metoda_eulera(); break;
-            case 12: metoda_heuna(); break;
-            case 13: metoda_punktu_srodkowego(); break;
-            case 14: metoda_rungego_kutty_4(); break;
+            //case 1: interpolacja_newtona(); break;
+            case 2: {
+                double a, b;
+                int n;
+                cout << "Wybierz funkcję: " << endl;
+                cout << "1. f(x) = 1/(1+x^2)\n";
+                int funkcja;
+                cin >> funkcja;
+                cout << "Podaj przedzial interpolacji [a, b]: ";
+                cin >> a >> b;
+                cout << "Podaj liczbe punktow interpolacji: ";
+                cin >> n;
+                vector<double> x = generowanie_punktow(a, b, n);
+                vector<double> y;
+
+                switch (funkcja) {
+                    case 1:
+                        for (double xi : x) {
+                            y.push_back(f(xi));
+                        }
+                        break;
+                    default:
+                        cout << "Nieprawidłowy wybór funkcji\n";
+                        break;
+                }
+                
+                double punkt;
+                cout << "Podaj punkt, dla ktorego chcesz obliczyc wartosc interpolowana: ";
+                cin >> punkt;
+                cout << "Punkty wezlowe: ";
+                for(int i = 0; i < x.size(); i++) {
+                    cout << "(" << x[i] << "," << y[i] << ") ";
+                }
+                cout << endl;
+
+                double wynik = interpolacja_lagrangea(x, y, punkt);
+                cout << "Wartosc interpolowana w punkcie x = " << punkt << ": " << wynik << endl;
+                cout << "Wartosc dokladna f(" << punkt << ") = " << f(punkt) << endl;
+                cout << "Blad bezwzgledny: " << abs(wynik - f(punkt)) << endl;
+                break;
+            }
+
+            // case 3: metoda_lu(); break;
+            // case 4: metoda_gaussa(); break;
+            // case 5: metoda_prostokatow(); break;
+            // case 6: metoda_trapezow(); break;
+            // case 7: metoda_simpsona(); break;
+            // case 8: kwadratura_gaussa_legendre(2); break;
+            // case 9: kwadratura_gaussa_legendre(3); break;
+            // case 10: kwadratura_gaussa_legendre(4); break;
+            // case 11: metoda_eulera(); break;
+            // case 12: metoda_heuna(); break;
+            // case 13: metoda_punktu_srodkowego(); break;
+            // case 14: metoda_rungego_kutty_4(); break;
             case 0: cout << "Koniec programu.\n"; break;
             default: cout << "Nieprawidlowy wybor. Sprobuj ponownie.\n";
         }

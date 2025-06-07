@@ -1,8 +1,1 @@
-//
-// Created by Admin on 06.06.2025.
-//
-
-#ifndef UKLADYROWNANLINIOWYCH_H
-#define UKLADYROWNANLINIOWYCH_H
-
-#endif //UKLADYROWNANLINIOWYCH_H
+# pragma once
