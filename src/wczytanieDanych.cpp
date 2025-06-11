@@ -21,16 +21,15 @@ struct PlikDanych {
 const vector<PlikDanych> DOSTEPNE_PLIKI = {
     {1, "A_daneH.txt", "Dane H"},
     {2, "A_daneN.txt", "Dane N"},
-    {3, "A_newton.txt", "Newton"},
+    {3, "A_lagrange.txt", "Lagrange"},
     {4, "A_dane_LU.txt", "Dane LU"},
     {5, "A_daneA_LU.txt", "Dane A LU"},
     {6, "A_daneB_LU.txt", "Dane B LU"},
     {7, "A_daneC_LU.txt", "Dane C LU"},
-    {8, "A_lagrange.txt", "Lagrange"},
-    {9, "A_daneA_gauss.txt", "Dane A Gauss"},
-    {10, "A_daneB_gauss.txt", "Dane B Gauss"},
-    {11, "A_daneC_gauss.txt", "Dane C Gauss"},
-    {12, "A_dane_calkowanie.txt", "Dane całkowanie"}
+    {8, "A_daneA_gauss.txt", "Dane A Gauss"},
+    {9, "A_daneB_gauss.txt", "Dane B Gauss"},
+    {10, "A_daneC_gauss.txt", "Dane C Gauss"},
+    {11, "A_dane_calkowanie.txt", "Dane całkowanie"}
 };
 
 void wyswietlPlikiFolderu() {
