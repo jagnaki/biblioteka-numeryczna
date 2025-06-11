@@ -43,7 +43,8 @@ vector<double> generatePoints(double a, double b, int n) {
 
 lagrange wczytaj_dane_lagrange(const string& nazwa_pliku, int lp) {
     lagrange data;
-    ifstream wczytaj(nazwa_pliku);
+    string sciezka = "../data/" + nazwa_pliku;
+    ifstream wczytaj(sciezka);
     if (!wczytaj.is_open())
     {
         cout << "Blad otwarcia pliku." << endl;
