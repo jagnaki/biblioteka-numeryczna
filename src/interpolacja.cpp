@@ -6,6 +6,8 @@
 #include <sstream>
 #include <cmath>
 #include "../include/interpolacja.h"
+
+#include "../include/funkcje.h"
 using namespace std;
 
 //funkcja liczaca wartosc wielomianu interpolacyjnego
@@ -29,11 +31,6 @@ struct lagrange {
     vector<double> fxi;
 };
 
-//funkcja f(x)=1/(1+x^2)
-double f(double x) {
-    return 1/(1+x*x);
-}
-
 //generowanie rownomiernie rozlozonych punktow
 vector<double> generatePoints(double a, double b, int n) {
     vector<double> points;
@@ -50,7 +47,6 @@ lagrange wczytaj_dane_lagrange(const string& nazwa_pliku, int lp) {
     if (!wczytaj.is_open())
     {
         cout << "Blad otwarcia pliku." << endl;
-        return 1;
     }
     string szukany_wiersz = "l.p.: "+ to_string(lp);
     string linia;
@@ -66,7 +62,6 @@ lagrange wczytaj_dane_lagrange(const string& nazwa_pliku, int lp) {
     if (!znaleziono)
     {
         cout << "Nie znaleziono linii z l.p.: "+ to_string(lp) << endl;
-        return 1;
     }
     getline(wczytaj, linia);
     stringstream ss_xi(linia.substr(linia.find(":") + 1));
@@ -84,7 +79,7 @@ lagrange wczytaj_dane_lagrange(const string& nazwa_pliku, int lp) {
     return data;
 }
 
-void do_interpolacja_lagrangea(const string& nazwa_pliku, int lp) {
+void do_interpolacja_lagrangea(const string& nazwa_pliku, int lp, funkcja_t f) {
     lagrange dane = wczytaj_dane_lagrange(nazwa_pliku, lp);
     if (dane.xi.empty() || dane.fxi.empty()) {
         cout << "Brak danych do interpolacji." << endl;

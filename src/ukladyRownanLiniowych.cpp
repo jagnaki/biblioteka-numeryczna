@@ -517,9 +517,20 @@ void sprawdz_rozwiazanie(const vector<vector<double>>& A, const vector<double>& 
     cout << endl;
 }
 
+//funkcja wypisująca macierz rozszerzoną
+void wypiszMacierzR(const vector<vector<double>>& A, const vector<double>& b, const int& n) {
+    cout<< fixed<<setprecision(2)<<fixed;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j)
+            cout << setw(10) << A[i][j] << " ";
+        cout << "| " << setw(10) << b[i] << endl;
+    }
+    cout << endl;
+}
+
 void test() {
     //testowy układ równań
-    Matrix matrix;
+    Macierz matrix;
     matrix.N=5;
     matrix.b = {1, 2, 3, 4, 5};
     matrix.A={

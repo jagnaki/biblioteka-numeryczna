@@ -39,23 +39,17 @@ int main() {
         switch (wybor) {
             //case 1: interpolacja_newtona(); break;
             case 2: {
+                int x;
+                funkcja_t wybranaFunkcja = pobierz_funkcje();
 
-                cout << "Wybierz funkcję: " << endl;
-                cout << "1. f(x) = 1/(1+x^2)\n";
-                int funkcja;
-                cin >> funkcja;
-
-                wczytajDaneZPliku()
-                cout << "Punkty wezlowe: ";
-                for(int i = 0; i < x.size(); i++) {
-                    cout << "(" << x[i] << "," << y[i] << ") ";
+                string nazwaPliku = wybierzPlik();
+                if (nazwaPliku.empty()) {
+                    cout << "Nie wybrano pliku. Zamykanie programu." << endl;
+                    return 1;
                 }
-                cout << endl;
 
-                double wynik = interpolacja_lagrangea(x, y, punkt);
-                cout << "Wartosc interpolowana w punkcie x = " << punkt << ": " << wynik << endl;
-                cout << "Wartosc dokladna f(" << punkt << ") = " << f(punkt) << endl;
-                cout << "Blad bezwzgledny: " << abs(wynik - f(punkt)) << endl;
+                int numerPorzadkowy = pobierzNumerPorzadkowy();
+                do_interpolacja_lagrangea(nazwaPliku, numerPorzadkowy, wybranaFunkcja);
                 break;
             }
 

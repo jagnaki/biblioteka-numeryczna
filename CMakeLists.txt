@@ -18,4 +18,5 @@ add_executable(biblioteka_numeryczna main.cpp
         src/calkowanieNumeryczne.cpp
         src/rownaniaRozniczkowe.cpp
         src/rownaniaNieliniowe.cpp
-        src/funkcje.cpp)
+        src/funkcje.cpp
+        src/wczytanieDanych.cpp)
