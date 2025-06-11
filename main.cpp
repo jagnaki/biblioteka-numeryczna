@@ -8,6 +8,7 @@
 #include "../biblioteka-numeryczna/include/interpolacja.h"
 #include "../biblioteka-numeryczna/include/rownaniaNieliniowe.h"
 #include "../biblioteka-numeryczna/include/funkcje.h"
+#include "../biblioteka-numeryczna/include/wczytanieDanych.h"
 
 using namespace std;
 
@@ -38,33 +39,13 @@ int main() {
         switch (wybor) {
             //case 1: interpolacja_newtona(); break;
             case 2: {
-                double a, b;
-                int n;
+
                 cout << "Wybierz funkcję: " << endl;
                 cout << "1. f(x) = 1/(1+x^2)\n";
                 int funkcja;
                 cin >> funkcja;
-                cout << "Podaj przedzial interpolacji [a, b]: ";
-                cin >> a >> b;
-                cout << "Podaj liczbe punktow interpolacji: ";
-                cin >> n;
-                vector<double> x = generowanie_punktow(a, b, n);
-                vector<double> y;
 
-                switch (funkcja) {
-                    case 1:
-                        for (double xi : x) {
-                            y.push_back(f(xi));
-                        }
-                        break;
-                    default:
-                        cout << "Nieprawidłowy wybór funkcji\n";
-                        break;
-                }
-                
-                double punkt;
-                cout << "Podaj punkt, dla ktorego chcesz obliczyc wartosc interpolowana: ";
-                cin >> punkt;
+                wczytajDaneZPliku()
                 cout << "Punkty wezlowe: ";
                 for(int i = 0; i < x.size(); i++) {
                     cout << "(" << x[i] << "," << y[i] << ") ";
