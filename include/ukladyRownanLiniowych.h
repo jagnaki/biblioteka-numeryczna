@@ -11,3 +11,5 @@ vector<double> podstawienie_wstecz(const vector<vector<double>>& U, const vector
 void sprawdz_rozwiazanie(const vector<vector<double>>& A, const vector<double>& x, const vector<double>& b, const int& n);
 void do_LU(const string& filename, int lp);
 void do_gauss(const string& filename, int lp);
+vector<double> eliminacja_gaussa(vector<vector<double>> A, vector<double> b, int n);
+void wypisz_rozwiazanie(const vector<double>& x);

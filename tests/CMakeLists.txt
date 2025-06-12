@@ -6,6 +6,7 @@ add_executable(biblioteka_tests
         test_aproksymacja.cpp
         test_calkowanie.cpp
         test_rownania_nieliniowe.cpp
+        test_rownania_liniowe.cpp
 )
 
 target_link_libraries(biblioteka_tests

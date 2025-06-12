@@ -65,13 +65,15 @@ void wypisz_macierz_rozszerzona(const vector<vector<double>>& A, const vector<do
     cout << endl;
 }
 
-vector<double> eliminacja_gaussa(vector<vector<double>>& A, vector<double>& b, int n) {
-    vector<double> x(n, 0.0); //wektor rozwiazan; poczatkowo wypelniony zerami
-    cout<<"Poczatkowy uklad rownan:"<<endl;
+vector<double> eliminacja_gaussa(vector<vector<double>> A, vector<double> b, int n) {
+    vector<double> x(n, 0.0);
+
+    cout << "Poczatkowy uklad rownan:" << endl;
     wypisz_macierz_rozszerzona(A, b, n);
-    //eliminacja - przeksztalcenie macierzy do postaci trojkatnej gornej
+
+    // Faza eliminacji w przód
     for (int k = 0; k < n; k++) {
-        //czesciowy pivoting - szukanie wiersza z najwiekszym elementem w kolumnie k
+        // Znajdź pivot (częściowy pivoting)
         int maxRow = k;
         double maxVal = fabs(A[k][k]);
 
@@ -81,74 +83,87 @@ vector<double> eliminacja_gaussa(vector<vector<double>>& A, vector<double>& b, i
                 maxRow = i;
             }
         }
-        //sprawdzenie czy element na przekatnej jest zerowy (z dokladnoscia do epsilon)
+
+        // Sprawdź czy pivot jest wystarczająco duży
         if (maxVal < 1e-10) {
-            //sprawdzenie czy jest to przypadek rownan liniowo zaleznych
-            bool isAllZero = true;
+            // Sprawdź czy cały wiersz jest zerowy
+            bool isRowZero = true;
             for (int j = k; j < n; j++) {
                 if (fabs(A[k][j]) > 1e-10) {
-                    isAllZero = false;
+                    isRowZero = false;
                     break;
                 }
             }
-            if (isAllZero && fabs(b[k]) > 1e-10) {
-                cout << "Uklad rownan jest sprzeczny - brak rozwiazania" << endl;
-                return vector<double>(n, NAN); //zwracenie NaN jako oznaczenie braku rozwiazania
-            } else if (isAllZero && fabs(b[k]) <= 1e-10) {
-                cout << "Wiersz " << k << " jest liniowo zalezny od innych wierszy" << endl;
-                //kontynuujemy - uklad moze miec nieskonczenie wiele rozwiazan
-                continue;
+
+            if (isRowZero) {
+                if (fabs(b[k]) > 1e-10) {
+                    cout << "Uklad rownan jest sprzeczny - brak rozwiazania" << endl;
+                    return vector<double>(n, NAN);
+                } else {
+                    cout << "Wiersz " << k << " jest liniowo zalezny od innych wierszy" << endl;
+                    cout << "Zmienna x[" << k << "] moze przyjmowac dowolna wartosc (przyjeto 0)" << endl;
+                    continue;
+                }
             } else {
                 cout << "Macierz osobliwa - determinant bliski zeru" << endl;
                 return vector<double>(n, NAN);
             }
         }
-        //zamiana wierszy, jesli znaleziono lepszy pivot
+
+        // Zamień wiersze jeśli potrzeba
         if (maxRow != k) {
             cout << "Zamiana wierszy " << k << " i " << maxRow << " (czesciowy pivoting)" << endl;
             swap(A[k], A[maxRow]);
             swap(b[k], b[maxRow]);
             wypisz_macierz_rozszerzona(A, b, n);
         }
-        //eliminacja zmiennych ponizej przekatnej
+
+        // Eliminacja
         for (int i = k + 1; i < n; i++) {
+            if (fabs(A[k][k]) < 1e-10) continue;
+
             double factor = A[i][k] / A[k][k];
 
-            //jesli wspolczynnik jest bliski zeru, nie wykonujemy eliminacji
-            if (fabs(factor) < 1e-10) continue;
-
-            //odejmowanie odpowiednich wielokrotnosci wiersza k od wiersza i
+            // Wyzeruj element A[i][k] i zaktualizuj resztę wiersza
             for (int j = k; j < n; j++) {
                 A[i][j] -= factor * A[k][j];
             }
             b[i] -= factor * b[k];
         }
+
         cout << "Po eliminacji zmiennej x[" << k << "]:" << endl;
         wypisz_macierz_rozszerzona(A, b, n);
-    }       //rozwiazanie ukladu trojkatnego (podstawienie wstecz)
+    }
+
+    // Podstawienie wsteczne
     for (int i = n - 1; i >= 0; i--) {
-        double sum = 0.0;
-        for (int j = i + 1; j < n; j++) {
-            sum += A[i][j] * x[j];
-        }
-        //sprawdzenie czy element na przekatnej jest zerowy
         if (fabs(A[i][i]) < 1e-10) {
-            if (fabs(b[i] - sum) < 1e-10) {
-                // 0 = 0, wiec mozna przyjac dowolna wartosc dla x[i]
-                x[i] = 0.0; //przyjmujemy zero jako jedno z mozliwych rozwiazan
-                cout << "Zmienna x[" << i << "] moze przyjmowac dowolna wartosc (przyjeto 0)" << endl;
-            } else {
-                // 0 != 0, uklad sprzeczny
-                cout << "Uklad równan jest sprzeczny przy podstawieniu wstecz!" << endl;
+            // Sprawdź czy wiersz jest niesprzeczny
+            double sum = 0.0;
+            for (int j = i + 1; j < n; j++) {
+                sum += A[i][j] * x[j];
+            }
+
+            if (fabs(b[i] - sum) > 1e-10) {
+                cout << "Uklad rownan jest sprzeczny przy podstawieniu wstecz!" << endl;
                 return vector<double>(n, NAN);
+            } else {
+                x[i] = 0.0; // Zmienna swobodna
+                cout << "Zmienna x[" << i << "] moze przyjmowac dowolna wartosc (przyjeto 0)" << endl;
             }
         } else {
-            //normalny przypadek - obliczenie x[i]
+            // Oblicz wartość zmiennej
+            double sum = 0.0;
+            for (int j = i + 1; j < n; j++) {
+                sum += A[i][j] * x[j];
+            }
             x[i] = (b[i] - sum) / A[i][i];
         }
     }
+
     return x;
 }
+
 void weryfikacja(const vector<vector<double>>& A, const vector<double>& b, const vector<double>& x, const int& n) {
     cout << "Weryfikacja rozwiazania:" << endl;
     double maxError = 0.0;
