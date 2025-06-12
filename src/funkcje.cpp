@@ -5,7 +5,7 @@
 using namespace std;
 
 //funkcja f(x)=1/(1+x^2)
-double f(double x) {
+double f1(double x) {
     return 1/(1+x*x);
 }
 
@@ -29,11 +29,11 @@ funkcja_t pobierz_funkcje() {
     cin >> wybor;
 
     switch(wybor) {
-        case 1: return f;
+        case 1: return f1;
         case 2: return f2;
         case 3: return f3;
         default:
             cout << "Nieprawidlowy wybor. Uzywam domyslnej funkcji f(x) = 1/(1+x^2)\n";
-            return f;
+            return f1;
     }
 }

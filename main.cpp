@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <locale>
 
 #include "../biblioteka-numeryczna/include/aproksymacja.h"
 #include "../biblioteka-numeryczna/include/ukladyRownanLiniowych.h"
@@ -14,6 +15,10 @@ using namespace std;
 
 
 int main() {
+#ifdef _WIN32
+    //Ustawienie strony kodowej konsoli na UTF-8 (65001)
+    system("chcp 65001 > nul");
+#endif
     int wybor;
 
     do {

@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <locale>
 #include "../include/interpolacja.h"
 
 #include "../include/funkcje.h"
@@ -81,6 +82,10 @@ lagrange wczytaj_dane_lagrange(const string& nazwa_pliku, int lp) {
 }
 
 void do_interpolacja_lagrangea(const string& nazwa_pliku, int lp, funkcja_t f) {
+#ifdef _WIN32
+    //Ustawienie strony kodowej konsoli na UTF-8 (65001)
+    system("chcp 65001 > nul");
+#endif
     lagrange dane = wczytaj_dane_lagrange(nazwa_pliku, lp);
     if (dane.xi.empty() || dane.fxi.empty()) {
         cout << "Brak danych do interpolacji." << endl;
@@ -183,5 +188,5 @@ void do_interpolacja_lagrangea(const string& nazwa_pliku, int lp, funkcja_t f) {
     }
 }
 
-//
+//interpolacja 2
 
