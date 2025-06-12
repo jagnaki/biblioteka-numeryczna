@@ -18,12 +18,6 @@ const double ALPHA = 7.0e-12;       //wartość alpha
 const double T0 = 1967.0;         //temperatura początkowa
 const double TIME_END = 1967.0;    //czas końcowy symulacji w sekundach
 
-//Struktura przechowująca punkt danych
-struct data_point {
-    double time;
-    double temperature;
-};
-
 //Funkcja równania różniczkowego: dT/dt = -alpha * (T^4 - beta)
 //Przyjmuje aktualny czas t i temperaturę T
 //Zwraca wartość pochodnej dT/dt

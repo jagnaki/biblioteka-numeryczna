@@ -7,6 +7,7 @@ add_executable(biblioteka_tests
         test_calkowanie.cpp
         test_rownania_nieliniowe.cpp
         test_rownania_liniowe.cpp
+        test_rownania_rozniczkowe.cpp
 )
 
 target_link_libraries(biblioteka_tests

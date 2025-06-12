@@ -45,8 +45,6 @@ int main() {
                 do_interpolacja_newtona(nazwaPliku, numerPorzadkowy, wybranaFunkcja);
                 break;
             }
-
-
             case 2: {
                 funkcja_t wybranaFunkcja = pobierz_funkcje();
 
@@ -60,7 +58,6 @@ int main() {
                 do_interpolacja_lagrangea(nazwaPliku, numerPorzadkowy, wybranaFunkcja);
                 break;
             }
-
             case 3: {
                 string nazwaPliku = wybierzPlik();
                 if (nazwaPliku.empty()) {
