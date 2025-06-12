@@ -4,7 +4,6 @@
 #include <cmath>
 #include "../include/interpolacja.h"
 
-// Testy dla funkcji pomocniczych
 TEST(InterpolacjaTest, FunkcjeTestowe) {
     EXPECT_DOUBLE_EQ(f1_interpolacja(0.0), 1.0);
     EXPECT_NEAR(f2_interpolacja(2.0), 4.0, 1e-10);
@@ -13,7 +12,7 @@ TEST(InterpolacjaTest, FunkcjeTestowe) {
 
 TEST(InterpolacjaTest, GenerowanieWezlow) {
     auto punkty = generatePoints(0.0, 1.0, 2);
-    ASSERT_EQ(punkty.size(), 3); // n+1 punktów
+    ASSERT_EQ(punkty.size(), 3);
     EXPECT_NEAR(punkty[0], 0.0, 1e-10);
     EXPECT_NEAR(punkty[1], 0.5, 1e-10);
     EXPECT_NEAR(punkty[2], 1.0, 1e-10);
@@ -21,15 +20,15 @@ TEST(InterpolacjaTest, GenerowanieWezlow) {
 
 TEST(InterpolacjaTest, InterpolacjaLagrangea) {
     std::vector<double> x = {0, 1, 2};
-    std::vector<double> y = {0, 1, 4}; // y = x^2
+    std::vector<double> y = {0, 1, 4};
 
     double wynik = interpolacja_lagrangea(x, y, 1.5);
-    EXPECT_NEAR(wynik, 2.25, 1e-10); // dla x = 1.5 spodziewamy się y = 2.25
+    EXPECT_NEAR(wynik, 2.25, 1e-10);
 }
 
 TEST(InterpolacjaTest, InterpolacjaNewtona) {
     std::vector<double> x = {0, 1, 2};
-    std::vector<double> y = {0, 1, 4}; // y = x^2
+    std::vector<double> y = {0, 1, 4};
 
     auto coef = dividedDifferences(x, y);
     ASSERT_EQ(coef.size(), 3);
@@ -38,21 +37,17 @@ TEST(InterpolacjaTest, InterpolacjaNewtona) {
     EXPECT_NEAR(wynik, 2.25, 1e-10);
 }
 
-// Test sprawdzający poprawność ilorazu różnicowego
 TEST(InterpolacjaTest, IlorazyRoznicowe) {
     std::vector<double> x = {0, 1, 2};
-    std::vector<double> y = {0, 1, 4}; // y = x^2
+    std::vector<double> y = {0, 1, 4};
 
     auto coef = dividedDifferences(x, y);
     ASSERT_EQ(coef.size(), 3);
 
-    // Dla funkcji kwadratowej, drugi iloraz różnicowy powinien być stały
     EXPECT_NEAR(coef[2], 1.0, 1e-10);
 }
 
-// Test sprawdzający przypadki brzegowe
 TEST(InterpolacjaTest, PrzypadkiBrzegowe) {
-    // Test dla pojedynczego punktu
     std::vector<double> x_single = {1.0};
     std::vector<double> y_single = {2.0};
 
@@ -61,32 +56,25 @@ TEST(InterpolacjaTest, PrzypadkiBrzegowe) {
     auto coef_single = dividedDifferences(x_single, y_single);
     EXPECT_NEAR(newtonInterpolation(x_single, coef_single, 1.0), 2.0, 1e-10);
 
-    // Test dla pustych wektorów
     std::vector<double> x_empty, y_empty;
     ASSERT_THROW(interpolacja_lagrangea(x_empty, y_empty, 0.0), std::invalid_argument);
     ASSERT_THROW(dividedDifferences(x_empty, y_empty), std::invalid_argument);
 }
 
-// Test dla funkcji do_interpolacja_lagrangea
 TEST(InterpolacjaTest, DoInterpolacjaLagrangea) {
-    // Przygotowanie testowego pliku
     std::string nazwa_pliku = "test_lagrange.txt";
     std::ofstream outFile(nazwa_pliku);
-    // Dodanie wymaganych danych do pliku
-    outFile << "1 # numer porządkowy\n";
-    outFile << "-1 1 # przedział [a,b]\n";
-    outFile << "5 # liczba węzłów interpolacji\n";
-    outFile << "10 # liczba punktów kontrolnych\n";
+    outFile << "1 \n";
+    outFile << "-1 1 \n";
+    outFile << "5 \n";
+    outFile << "10 \n";
     outFile.close();
 
-    // Test z funkcją f1_interpolacja
     ASSERT_NO_THROW(do_interpolacja_lagrangea(nazwa_pliku, 1, f1_interpolacja));
 
-    // Sprawdzenie, czy plik został utworzony i zawiera dane
     std::ifstream inFile(nazwa_pliku);
     ASSERT_TRUE(inFile.good());
 
-    // Sprawdzenie, czy plik nie jest pusty
     std::string line;
     bool hasContent = false;
     if (std::getline(inFile, line)) {
@@ -98,26 +86,20 @@ TEST(InterpolacjaTest, DoInterpolacjaLagrangea) {
     std::remove(nazwa_pliku.c_str());
 }
 
-// Test dla funkcji do_interpolacja_newtona
 TEST(InterpolacjaTest, DoInterpolacjaNewtona) {
-    // Przygotowanie testowego pliku
     std::string nazwa_pliku = "test_newton.txt";
     std::ofstream outFile(nazwa_pliku);
-    // Dodanie wymaganych danych do pliku
-    outFile << "1 # numer porządkowy\n";
-    outFile << "-1 1 # przedział [a,b]\n";
-    outFile << "5 # liczba węzłów interpolacji\n";
-    outFile << "10 # liczba punktów kontrolnych\n";
+    outFile << "1 \n";
+    outFile << "-1 1 \n";
+    outFile << "5 \n";
+    outFile << "10 \n";
     outFile.close();
 
-    // Test z funkcją f1_interpolacja
     ASSERT_NO_THROW(do_interpolacja_newtona(nazwa_pliku, 1, f1_interpolacja));
 
-    // Sprawdzenie, czy plik został utworzony i zawiera dane
     std::ifstream inFile(nazwa_pliku);
     ASSERT_TRUE(inFile.good());
 
-    // Sprawdzenie, czy plik nie jest pusty
     std::string line;
     bool hasContent = false;
     if (std::getline(inFile, line)) {
