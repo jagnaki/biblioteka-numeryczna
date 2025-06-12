@@ -4,6 +4,8 @@
 
 Projekt realizowany w ramach przedmiotu **Metody Numeryczne**.
 
+Program stanowi interaktywne narzędzie konsolowe umożliwiające wykonywanie podstawowych operacji numerycznych. Program pobiera dane z plików wejściowych, które użytkownik wybiera z poziomu menu, i umożliwia wybór konkretnej funkcji matematycznej do analizy.
+
 Biblioteka zawiera następujące funkcje numeryczne, pogrupowane według kategorii:
 
 ### 🔹 Interpolacja
@@ -35,7 +37,14 @@ Funkcja porównująca metody:
 - Metoda bisekcji  
 - Metoda Newtona  
 - Metoda siecznych  
+---
+## Przykład użycia:
 
+1. Uruchom program.
+2. W menu wybierz opcję, np. `1` — Interpolacja Newtona.
+3. Z menu dostępnych plików wybierz odpowiedni plik dla wybranej metody.
+4. Wybierz numer porządkowy zestawu danych.
+5. Program wykona interpolację i wyświetli wynik.
 ---
 
 ## Struktura katalogów
