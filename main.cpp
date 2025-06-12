@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <locale>
 #include "../biblioteka-numeryczna/include/aproksymacja.h"
 #include "../biblioteka-numeryczna/include/ukladyRownanLiniowych.h"
@@ -27,14 +26,9 @@ int main() {
         cout << "4. Uklad rownan liniowych - metoda Gaussa\n";
         cout << "5. Calkowanie - czas\n";
         cout << "6. Calkowanie - kwadratury\n";
-        cout << "*7. Rownania rozniczkowe - metoda Eulera\n";
-        cout << "*8. Rownania rozniczkowe - metoda Heuna\n";
-        cout << "*9. Rownania rozniczkowe - metoda punktu srodkowego\n";
-        cout << "*10. Rownania rozniczkowe - metoda Rungego-Kutty IV rzedu\n";
-        cout << "11. Aproksymacja funkcji\n";
-        cout << "*12. Rownania nieliniowe - metoda bisekcji\n";
-        cout << "*13. Rownania nieliniowe - metoda Newtona\n";
-        cout << "*14. Rownania nieliniowe - metoda siecznych\n";
+        cout << "7. Rownania rozniczkowe\n";
+        cout << "8. Aproksymacja funkcji\n";
+        cout << "9. Rownania nieliniowe\n";
         cout << "0. Wyjscie\n";
         cout << "Wybierz opcje: ";
         cin >> wybor;
@@ -107,17 +101,20 @@ int main() {
                 do_calkowanie_kwadratury(nazwaPliku, numerPorzadkowy);
                 break;
             }
-            // case 7: metoda_eulera(); break;
-            // case 8: metoda_heuna(); break;
-            // case 9: metoda_punktu_srodkowego(); break;
-            // case 10: metoda_rungego_kutty_4(); break;
-            case 11: {
+            case 7: do_rownania_rozniczkowe(); break;
+            case 8: {
                 do_aproksymacja();
                 break;
             }
-            // case 12: metoda_bisekcji(); break;
-            // case 13: metoda_newtona(); break;
-            // case 14: metoda_siecznych(); break;
+            case 9:
+                double a, b, h;
+                cout << "Podaj poczatek przedzialu (a): ";
+                cin >> a;
+                cout << "Podaj koniec przedzialu (b): ";
+                cin >> b;
+                cout << "Podaj krok (h): ";
+                cin >> h;
+                do_rownania_nieliniowe(a, b, h); break;
             case 0: cout << "Koniec programu.\n"; break;
             default: cout << "Nieprawidlowy wybor. Sprobuj ponownie.\n";
         }
