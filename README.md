@@ -15,7 +15,7 @@ Biblioteka zawiera następujące funkcje numeryczne, pogrupowane według kategor
 - Metoda LU  
 
 ### 🔹 Całkowanie numeryczne  
-Funkcje porównujące następujące metody:
+Funkcje porównujące metody:
 - Metoda prostokątów  
 - Metoda trapezów  
 - Metoda Simpsona  
@@ -38,7 +38,7 @@ Funkcja porównująca metody:
 
 ---
 
-## 📁 Struktura katalogów
+## Struktura katalogów
 biblioteka-numeryczna/
 
 ├── include/    # Pliki nagłówkowe
