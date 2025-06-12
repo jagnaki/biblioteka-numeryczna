@@ -8,8 +8,38 @@
 #include <locale>
 #include "../include/interpolacja.h"
 
-#include "../include/funkcje.h"
-using namespace std;
+//funkcja f(x)=1/(1+x^2)
+double f1_interpolacja(double x) {
+    return 1/(1+x*x);
+}
+
+//funkcja f(x)=x^2
+double f2_interpolacja(double x) {
+    return x*x;
+}
+
+//funkcja f(x)=sin(x)
+double f3_interpolacja(double x) {
+    return sin(x);
+}
+
+funkcja_t funkcje[] = {f1_interpolacja, f2_interpolacja, f3_interpolacja};
+//funkcja zwracajaca wskaznik do funkcji na podstawie indeksu
+funkcja_t pobierz_funkcje() {
+    int wybor;
+    cout << "Wybierz funkcję do interpolacji:\n";
+    cout << "1. f(x) = 1/(1+x^2)\n";
+    cout << "2. f(x) = x^2\n";
+    cout << "3. f(x) = sin(x)\n";
+    cout << "Wybierz numer funkcji (1-3): ";
+    cin >> wybor;
+
+    if (wybor < 1 || wybor > 3) {
+        cerr << "Nieprawidłowy wybór funkcji. Domyślnie wybrano f1." << endl;
+        return f1_interpolacja;
+    }
+    return funkcje[wybor - 1];
+}
 
 //funkcja liczaca wartosc wielomianu interpolacyjnego
 double interpolacja_lagrangea(vector<double> x, vector<double> y, double n) {
@@ -189,4 +219,80 @@ void do_interpolacja_lagrangea(const string& nazwa_pliku, int lp, funkcja_t f) {
 }
 
 //interpolacja 2
+vector<double> dividedDifferences(const vector<double>& xi, const vector<double>& fxi) {
+    int n = xi.size();
+    vector<double> coef(fxi);
+
+    for (int j = 1; j < n; j++) {
+        for (int i = n - 1; i >= j; i--) {
+            coef[i] = (coef[i] - coef[i - 1]) / (xi[i] - xi[i - j]);
+        }
+    }
+    return coef;
+}
+
+double newtonInterpolation(const vector<double>& xi, const vector<double>& coef, double x) {
+    double result = coef[0];
+    double term = 1.0;
+
+    for (size_t i = 1; i < xi.size(); i++) {
+        term *= (x - xi[i - 1]);
+        result += coef[i] * term;
+    }
+
+    return result;
+}
+
+double MSE(const vector<double>& xi, const vector<double>& fxi, const vector<double>& xi_wezly, const vector<double>& coef) {
+    int n = xi.size();
+    double mse = 0.0;
+    for (int i = 0; i < n; i++) {
+        double interpolatedValue = newtonInterpolation(xi_wezly, coef, xi[i]);
+        double error = fxi[i] - interpolatedValue;
+        mse += error * error;
+    }
+    return mse / n;
+}
+
+void do_interpolacja_newtona(const string& nazwa_pliku, int lp, funkcja_t f) {
+    lagrange dane = wczytaj_dane_lagrange(nazwa_pliku, lp);
+    if (dane.xi.empty() || dane.fxi.empty()) {
+        cout << "Brak danych do interpolacji." << endl;
+        return;
+    }
+
+    //punkty wezlowe
+    vector<double> xi_wezly, fxi_wezly;
+    for (size_t i = 0; i < dane.xi.size(); i += 5) {
+        xi_wezly.push_back(dane.xi[i]);
+        fxi_wezly.push_back(dane.fxi[i]);
+    }
+
+    //obliczenie wspolczynnikow wielomianu Newtona
+    vector<double> coef = dividedDifferences(xi_wezly, fxi_wezly);
+
+    //zapisanie danych do pliku
+    ofstream wyniki("wyniki_newtona.csv");
+    wyniki<<"xi;f_interpolated\n";
+    double punkt=0;
+    for (int i=0; i<dane.xi.size(); i++) {
+        punkt = dane.xi[i];
+        double wynikI = newtonInterpolation(xi_wezly, coef, punkt);
+        wyniki<<dane.xi[i]<<";"<<wynikI<<endl;
+        //cout<<"xi = "<<xi[i]<<"\twynik = "<< wynikI<<"\n";
+    }
+    wyniki.close();
+
+    //obliczenie bledu
+    double blad = MSE(dane.xi, dane.fxi, xi_wezly, coef);
+    cout<<"Sredni blad kwadratowy: "<<blad<<endl;
+
+    //pobranie punktu od uzytkownika
+    punkt=0;
+    cout<<"Podaj punkt: ";
+    cin>>punkt;
+    cout<<"Wartosc wielomianu interpolacyjnego w podanym punkcie: "<<newtonInterpolation(xi_wezly, coef, punkt)<<endl;
+}
+
+
 

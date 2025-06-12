@@ -11,12 +11,10 @@ add_executable(biblioteka_numeryczna main.cpp
         include/calkowanieNumeryczne.h
         include/rownaniaRozniczkowe.h
         include/rownaniaNieliniowe.h
-        include/funkcje.h
         src/ukladyRownanLiniowych.cpp
         src/interpolacja.cpp
         src/aproksymacja.cpp
         src/calkowanieNumeryczne.cpp
         src/rownaniaRozniczkowe.cpp
         src/rownaniaNieliniowe.cpp
-        src/funkcje.cpp
         src/wczytanieDanych.cpp)

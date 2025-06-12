@@ -7,8 +7,7 @@
 #include <cmath>
 #include "../include/interpolacja.h"
 using namespace std;
-
-using namespace std;
+#include "../include/wczytanieDanych.h"
 
 // Struktura przechowująca informacje o plikach
 struct PlikDanych {

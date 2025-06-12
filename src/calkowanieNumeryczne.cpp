@@ -7,6 +7,7 @@
 #include <sstream>
 #include <chrono>
 #include <locale>
+#include "../include/calkowanieNumeryczne.h"
 
 using namespace std;
 
@@ -40,7 +41,6 @@ kwadratury wczytaj_dane_kwadratury(const string& nazwa_pliku, int lp) {
     if (!znaleziono)
     {
         cerr << "Nie znaleziono linii z l.p.: 12." << endl;
-        return 1;
     }
 
     //wczytujemy stopień wielomianu
@@ -93,9 +93,18 @@ double wielomian_hornera(const vector<double>& coefficients, const double& x)
 }
 
 //funkcja obliczająca funkcję na potrzeby całkowania
-double f1(double x) {
+double f1_calkowanie(double x) {
     return x * pow(cos(x), 3);
 }
+
+double f2_calkowanie(double x) {
+    return x * x * pow(sin(x), 3);
+}
+
+double f3_calkowanie(double x) {
+    return exp(x * x) * (1.0 - x);
+}
+
 
 /**
  * funkcja obliczająca wartość funkcji w zależności od wybranego trybu
@@ -111,11 +120,11 @@ double f1(double x) {
 double wybor_funkcji(int mode, double x, const vector<double>& coeffs = vector<double>()) {
     switch (mode) {
         case 0:
-            return f2(x);
+            return f2_calkowanie(x);
         case 1:
-            return f3(x);
+            return f3_calkowanie(x);
         case 2:
-            return f1(x);
+            return f1_calkowanie(x);
         case 3:
             return wielomian_hornera(coeffs, x);
         default:
@@ -202,8 +211,7 @@ double oblicz_blad_wzgledny(double approximateValue, double exactValue) {
 }
 
 //to jest to samo co całkowanie 2 tylko, że tu jest mierzony czas
-
-/*void do_calkowanie1(const string& nazwa_pliku, int lp) {
+void do_calkowanie_czas(const string& nazwa_pliku, int lp) {
     kwadratury data = wczytaj_dane_kwadratury(nazwa_pliku, lp);
     //liczba przedziałów
     int n = 2500;
@@ -364,25 +372,6 @@ gauss_legendre_punkty inicjalizacja_gauss_legendre(int n) {
     return result;
 }
 
-/**
- * Funkcja podcałkowa dla pierwszego zadania: x^2*sin^3(x)
- *
- * @param x - zmienna niezależna
- * @return - wartość funkcji w punkcie x
- */
-double f2(double x) {
-    return x * x * pow(sin(x), 3);
-}
-
-/**
- * Funkcja podcałkowa dla drugiego zadania: exp(x^2)*(1-x)
- *
- * @param x - zmienna niezależna
- * @return - wartość funkcji w punkcie x
- */
-double f3(double x) {
-    return exp(x * x) * (1.0 - x);
-}
 
 /**
  * Funkcja obliczająca dokładną wartość pierwszej całki (analitycznie)
@@ -470,7 +459,7 @@ double metoda_gauss_legendre_przedzialy(double a, double b, int n, int intervals
 /**
  * Funkcja główna programu
  */
-void do_calkowanie2(const string& nazwa_pliku, int lp) {
+void do_calkowanie(const string& nazwa_pliku, int lp) {
 #ifdef _WIN32
     //Ustawienie strony kodowej konsoli na UTF-8 (65001)
     system("chcp 65001 > nul");
@@ -708,7 +697,7 @@ void do_calkowanie2(const string& nazwa_pliku, int lp) {
                 double glResult;
 
                 if (funcIndex == 3) {
-                    glResult = metoda_gauss_legendre_przedzialy(a, b, points, intervals, funcIndex, polynomialCoeffs);
+                    glResult = metoda_gauss_legendre_przedzialy(a, b, points, intervals, funcIndex);
                 } else {
                     glResult = metoda_gauss_legendre_przedzialy(a, b, points, intervals, funcIndex);
                 }

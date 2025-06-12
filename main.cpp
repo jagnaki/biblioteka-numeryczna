@@ -1,14 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <locale>
-
 #include "../biblioteka-numeryczna/include/aproksymacja.h"
 #include "../biblioteka-numeryczna/include/ukladyRownanLiniowych.h"
 #include "../biblioteka-numeryczna/include/calkowanieNumeryczne.h"
 #include "../biblioteka-numeryczna/include/rownaniaRozniczkowe.h"
 #include "../biblioteka-numeryczna/include/interpolacja.h"
 #include "../biblioteka-numeryczna/include/rownaniaNieliniowe.h"
-#include "../biblioteka-numeryczna/include/funkcje.h"
 #include "../biblioteka-numeryczna/include/wczytanieDanych.h"
 
 using namespace std;
@@ -43,8 +41,8 @@ int main() {
 
         switch (wybor) {
             //case 1: interpolacja_newtona(); break;
+
             case 2: {
-                int x;
                 funkcja_t wybranaFunkcja = pobierz_funkcje();
 
                 string nazwaPliku = wybierzPlik();
@@ -59,7 +57,16 @@ int main() {
             }
 
             // case 3: metoda_lu(); break;
-            // case 4: metoda_gaussa(); break;
+            case 4: {
+                string nazwaPliku = wybierzPlik();
+                if (nazwaPliku.empty()) {
+                    cout << "Nie wybrano pliku. Zamykanie programu." << endl;
+                    return 1;
+                }
+                int numerPorzadkowy = pobierzNumerPorzadkowy();
+                do_gauss(nazwaPliku, numerPorzadkowy);
+                break;
+            }
             // case 5: metoda_prostokatow(); break;
             // case 6: metoda_trapezow(); break;
             // case 7: metoda_simpsona(); break;

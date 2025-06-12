@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <locale>
 #include <string>
+#include "../include/aproksymacja.h"
 
 using namespace std;
 

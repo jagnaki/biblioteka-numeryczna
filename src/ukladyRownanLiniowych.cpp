@@ -7,6 +7,7 @@
 #include <cmath>
 #include <limits>
 using namespace std;
+#include "../include/ukladyRownanLiniowych.h"
 
 //Gauss
 struct Gauss {
