@@ -4,6 +4,7 @@ enable_testing()
 add_executable(biblioteka_tests
         test_interpolacja.cpp
         test_aproksymacja.cpp
+        test_calkowanie.cpp
 )
 
 target_link_libraries(biblioteka_tests

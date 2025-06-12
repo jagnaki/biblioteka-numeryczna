@@ -206,8 +206,8 @@ double oblicz_blad_bezwzgledny(double approximateValue, double exactValue) {
     return abs(approximateValue - exactValue);
 }
 
-double oblicz_blad_wzgledny(double approximateValue, double exactValue) {
-    return (abs(approximateValue - exactValue)) / abs(exactValue)*100;
+double oblicz_blad_wzgledny(double przyblizana, double dokladna) {
+    return abs(przyblizana - dokladna) / abs(dokladna);
 }
 
 //to jest to samo co całkowanie 2 tylko, że tu jest mierzony czas
