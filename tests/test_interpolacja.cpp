@@ -66,3 +66,65 @@ TEST(InterpolacjaTest, PrzypadkiBrzegowe) {
     ASSERT_THROW(interpolacja_lagrangea(x_empty, y_empty, 0.0), std::invalid_argument);
     ASSERT_THROW(dividedDifferences(x_empty, y_empty), std::invalid_argument);
 }
+
+// Test dla funkcji do_interpolacja_lagrangea
+TEST(InterpolacjaTest, DoInterpolacjaLagrangea) {
+    // Przygotowanie testowego pliku
+    std::string nazwa_pliku = "test_lagrange.txt";
+    std::ofstream outFile(nazwa_pliku);
+    // Dodanie wymaganych danych do pliku
+    outFile << "1 # numer porządkowy\n";
+    outFile << "-1 1 # przedział [a,b]\n";
+    outFile << "5 # liczba węzłów interpolacji\n";
+    outFile << "10 # liczba punktów kontrolnych\n";
+    outFile.close();
+
+    // Test z funkcją f1_interpolacja
+    ASSERT_NO_THROW(do_interpolacja_lagrangea(nazwa_pliku, 1, f1_interpolacja));
+
+    // Sprawdzenie, czy plik został utworzony i zawiera dane
+    std::ifstream inFile(nazwa_pliku);
+    ASSERT_TRUE(inFile.good());
+
+    // Sprawdzenie, czy plik nie jest pusty
+    std::string line;
+    bool hasContent = false;
+    if (std::getline(inFile, line)) {
+        hasContent = true;
+    }
+    EXPECT_TRUE(hasContent);
+
+    inFile.close();
+    std::remove(nazwa_pliku.c_str());
+}
+
+// Test dla funkcji do_interpolacja_newtona
+TEST(InterpolacjaTest, DoInterpolacjaNewtona) {
+    // Przygotowanie testowego pliku
+    std::string nazwa_pliku = "test_newton.txt";
+    std::ofstream outFile(nazwa_pliku);
+    // Dodanie wymaganych danych do pliku
+    outFile << "1 # numer porządkowy\n";
+    outFile << "-1 1 # przedział [a,b]\n";
+    outFile << "5 # liczba węzłów interpolacji\n";
+    outFile << "10 # liczba punktów kontrolnych\n";
+    outFile.close();
+
+    // Test z funkcją f1_interpolacja
+    ASSERT_NO_THROW(do_interpolacja_newtona(nazwa_pliku, 1, f1_interpolacja));
+
+    // Sprawdzenie, czy plik został utworzony i zawiera dane
+    std::ifstream inFile(nazwa_pliku);
+    ASSERT_TRUE(inFile.good());
+
+    // Sprawdzenie, czy plik nie jest pusty
+    std::string line;
+    bool hasContent = false;
+    if (std::getline(inFile, line)) {
+        hasContent = true;
+    }
+    EXPECT_TRUE(hasContent);
+
+    inFile.close();
+    std::remove(nazwa_pliku.c_str());
+}

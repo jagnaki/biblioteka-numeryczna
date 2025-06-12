@@ -3,6 +3,7 @@ enable_testing()
 # Dodaj executable dla testów
 add_executable(biblioteka_tests
         test_interpolacja.cpp
+        test_aproksymacja.cpp
 )
 
 target_link_libraries(biblioteka_tests
