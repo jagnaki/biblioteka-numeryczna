@@ -225,7 +225,8 @@ struct Macierz {
 
 //funkcja do odczytu układu równań z pliku
 Macierz wczytaj_dane_LU(const string& filename, int lp) {
-    ifstream file(filename);
+    string sciezka = "../data/" + filename;
+    ifstream file(sciezka);
     Macierz g;
     if (!file.is_open()) {
         cout << "Blad otwarcia pliku." << endl;

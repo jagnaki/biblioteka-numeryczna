@@ -296,7 +296,7 @@ void do_calkowanie_czas(const string& nazwa_pliku, int lp) {
     cout << "Metoda prostokatow: " << errorRectangleF << " %" << endl;
     cout << "Metoda trapezow: " << errorTrapezoidalF << " %" << endl;
     cout << "Metoda Simpsona: " << errorSimpsonF << " %" << endl;
-}*/
+}
 
 //całkowanie numeryczne 2
 /**
@@ -309,12 +309,13 @@ struct gauss_legendre_punkty {
     vector<double> weights; //Wagi kwadratury
 };
 
-/**
+/*
  * Funkcja inicjalizująca węzły i wagi dla różnych stopni kwadratur Gaussa-Legendre'a
  *
  * @param n - liczba punktów (węzłów) kwadratury
  * @return - struktura zawierająca węzły i wagi
- */
+*/
+
 gauss_legendre_punkty inicjalizacja_gauss_legendre(int n) {
     gauss_legendre_punkty result;
 
@@ -459,7 +460,7 @@ double metoda_gauss_legendre_przedzialy(double a, double b, int n, int intervals
 /**
  * Funkcja główna programu
  */
-void do_calkowanie(const string& nazwa_pliku, int lp) {
+void do_calkowanie_kwadratury(const string& nazwa_pliku, int lp) {
 #ifdef _WIN32
     //Ustawienie strony kodowej konsoli na UTF-8 (65001)
     system("chcp 65001 > nul");

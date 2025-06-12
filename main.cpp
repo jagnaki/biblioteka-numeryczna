@@ -25,22 +25,33 @@ int main() {
         cout << "2. Interpolacja Lagrange'a\n";
         cout << "3. Uklad rownan liniowych - metoda LU\n";
         cout << "4. Uklad rownan liniowych - metoda Gaussa\n";
-        cout << "5. Calkowanie - metoda prostokatow\n";
-        cout << "6. Calkowanie - metoda trapezow\n";
-        cout << "7. Calkowanie - metoda Simpsona\n";
-        cout << "8. Calkowanie - 2-wezlowe kwadratury G-L\n";
-        cout << "9. Calkowanie - 3-wezlowe kwadratury G-L\n";
-        cout << "10. Calkowanie - 4-wezlowe kwadratury G-L\n";
-        cout << "11. Rownania rozniczkowe - metoda Eulera\n";
-        cout << "12. Rownania rozniczkowe - metoda Heuna\n";
-        cout << "13. Rownania rozniczkowe - metoda punktu srodkowego\n";
-        cout << "14. Rownania rozniczkowe - metoda Rungego-Kutty IV rzedu\n";
+        cout << "5. Calkowanie - czas\n";
+        cout << "6. Calkowanie - kwadratury\n";
+        cout << "*7. Rownania rozniczkowe - metoda Eulera\n";
+        cout << "*8. Rownania rozniczkowe - metoda Heuna\n";
+        cout << "*9. Rownania rozniczkowe - metoda punktu srodkowego\n";
+        cout << "*10. Rownania rozniczkowe - metoda Rungego-Kutty IV rzedu\n";
+        cout << "11. Aproksymacja funkcji\n";
+        cout << "*12. Rownania nieliniowe - metoda bisekcji\n";
+        cout << "*13. Rownania nieliniowe - metoda Newtona\n";
+        cout << "*14. Rownania nieliniowe - metoda siecznych\n";
         cout << "0. Wyjscie\n";
         cout << "Wybierz opcje: ";
         cin >> wybor;
 
         switch (wybor) {
-            //case 1: interpolacja_newtona(); break;
+            case 1: {
+                funkcja_t wybranaFunkcja = pobierz_funkcje();
+                string nazwaPliku = wybierzPlik();
+                if (nazwaPliku.empty()) {
+                    cout << "Nie wybrano pliku. Zamykanie programu." << endl;
+                    return 1;
+                }
+                int numerPorzadkowy = pobierzNumerPorzadkowy();
+                do_interpolacja_newtona(nazwaPliku, numerPorzadkowy, wybranaFunkcja);
+                break;
+            }
+
 
             case 2: {
                 funkcja_t wybranaFunkcja = pobierz_funkcje();
@@ -56,7 +67,16 @@ int main() {
                 break;
             }
 
-            // case 3: metoda_lu(); break;
+            case 3: {
+                string nazwaPliku = wybierzPlik();
+                if (nazwaPliku.empty()) {
+                    cout << "Nie wybrano pliku. Zamykanie programu." << endl;
+                    return 1;
+                }
+                int numerPorzadkowy = pobierzNumerPorzadkowy();
+                do_LU(nazwaPliku, numerPorzadkowy);
+                break;
+            }
             case 4: {
                 string nazwaPliku = wybierzPlik();
                 if (nazwaPliku.empty()) {
@@ -67,16 +87,37 @@ int main() {
                 do_gauss(nazwaPliku, numerPorzadkowy);
                 break;
             }
-            // case 5: metoda_prostokatow(); break;
-            // case 6: metoda_trapezow(); break;
-            // case 7: metoda_simpsona(); break;
-            // case 8: kwadratura_gaussa_legendre(2); break;
-            // case 9: kwadratura_gaussa_legendre(3); break;
-            // case 10: kwadratura_gaussa_legendre(4); break;
-            // case 11: metoda_eulera(); break;
-            // case 12: metoda_heuna(); break;
-            // case 13: metoda_punktu_srodkowego(); break;
-            // case 14: metoda_rungego_kutty_4(); break;
+            case 5: {
+                string nazwaPliku = wybierzPlik();
+                if (nazwaPliku.empty()) {
+                    cout << "Nie wybrano pliku. Zamykanie programu." << endl;
+                    return 1;
+                }
+                int numerPorzadkowy = pobierzNumerPorzadkowy();
+                do_calkowanie_czas(nazwaPliku, numerPorzadkowy);
+                break;
+            }
+            case 6: {
+                string nazwaPliku = wybierzPlik();
+                if (nazwaPliku.empty()) {
+                    cout << "Nie wybrano pliku. Zamykanie programu." << endl;
+                    return 1;
+                }
+                int numerPorzadkowy = pobierzNumerPorzadkowy();
+                do_calkowanie_kwadratury(nazwaPliku, numerPorzadkowy);
+                break;
+            }
+            // case 7: metoda_eulera(); break;
+            // case 8: metoda_heuna(); break;
+            // case 9: metoda_punktu_srodkowego(); break;
+            // case 10: metoda_rungego_kutty_4(); break;
+            case 11: {
+                do_aproksymacja();
+                break;
+            }
+            // case 12: metoda_bisekcji(); break;
+            // case 13: metoda_newtona(); break;
+            // case 14: metoda_siecznych(); break;
             case 0: cout << "Koniec programu.\n"; break;
             default: cout << "Nieprawidlowy wybor. Sprobuj ponownie.\n";
         }
