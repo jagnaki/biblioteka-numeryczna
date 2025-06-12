@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.31)
 project(biblioteka_numeryczna)
 
@@ -17,9 +16,8 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-
+# Utwórz bibliotekę (bez main.cpp)
 add_library(biblioteka_numeryczna
-        main.cpp
         ../biblioteka-numeryczna/include/interpolacja.h
         ../biblioteka-numeryczna/include/ukladyRownanLiniowych.h
         ../biblioteka-numeryczna/include/aproksymacja.h
@@ -35,6 +33,12 @@ add_library(biblioteka_numeryczna
         ../biblioteka-numeryczna/src/wczytanieDanych.cpp)
 
 target_include_directories(biblioteka_numeryczna PUBLIC include)
+
+# Utwórz plik wykonywalny z main.cpp
+add_executable(main main.cpp)
+
+# Podłącz bibliotekę do pliku wykonywalnego
+target_link_libraries(main biblioteka_numeryczna)
 
 # Dodaj katalog z testami
 add_subdirectory(tests)

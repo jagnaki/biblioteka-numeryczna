@@ -43,6 +43,10 @@ funkcja_t pobierz_funkcje() {
 
 //funkcja liczaca wartosc wielomianu interpolacyjnego
 double interpolacja_lagrangea(vector<double> x, vector<double> y, double n) {
+    if (x.empty() || y.empty()) {
+        throw invalid_argument("Wektory wejściowe nie mogą być puste");
+    }
+
     double result = 0;
     cout<<endl;
     for (int i = 0; i < x.size(); i++) {
@@ -220,6 +224,10 @@ void do_interpolacja_lagrangea(const string& nazwa_pliku, int lp, funkcja_t f) {
 
 //interpolacja 2
 vector<double> dividedDifferences(const vector<double>& xi, const vector<double>& fxi) {
+    if (xi.empty() || fxi.empty()) {
+        throw invalid_argument("Wektory wejściowe nie mogą być puste");
+    }
+
     int n = xi.size();
     vector<double> coef(fxi);
 

@@ -1,14 +1,24 @@
+enable_testing()
+
 # Dodaj executable dla testów
-add_executable(test_interpolacji
+add_executable(biblioteka_tests
         test_interpolacja.cpp
 )
 
-target_link_libraries(test_interpolacji
+target_link_libraries(biblioteka_tests
         PRIVATE
         biblioteka_numeryczna
+        GTest::gtest
         GTest::gtest_main
+)
+
+add_test(
+        NAME biblioteka_tests
+        COMMAND biblioteka_tests
 )
 
 # Włącz wykrywanie testów
 include(GoogleTest)
-gtest_discover_tests(test_interpolacji)
+gtest_discover_tests(biblioteka_tests
+        DISCOVERY_TIMEOUT 120
+)
