@@ -4,7 +4,21 @@ project(biblioteka_numeryczna)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(biblioteka_numeryczna
+# Włącz testy
+enable_testing()
+
+# Dodaj GoogleTest
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+)
+# Dla Windows: force shared libraries
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+
+add_library(biblioteka_numeryczna
         main.cpp
         ../biblioteka-numeryczna/include/interpolacja.h
         ../biblioteka-numeryczna/include/ukladyRownanLiniowych.h
@@ -20,4 +34,7 @@ add_executable(biblioteka_numeryczna
         ../biblioteka-numeryczna/src/rownaniaNieliniowe.cpp
         ../biblioteka-numeryczna/src/wczytanieDanych.cpp)
 
-target_include_directories(biblioteka_numeryczna PRIVATE include)
+target_include_directories(biblioteka_numeryczna PUBLIC include)
+
+# Dodaj katalog z testami
+add_subdirectory(tests)
